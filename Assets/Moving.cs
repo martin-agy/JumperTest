@@ -72,11 +72,11 @@ public class Moving : MonoBehaviour
         // If we have a block straight in front of the camera
         if (Physics.Raycast(headCamera.transform.position, headCamera.transform.forward, out hit, 10, layerMask))
         {
-            // Create a block according to hit point and normal
+            // Create a block assuming the hit is a block
             if (Input.GetKeyDown(KeyCode.X))
                 Instantiate<GameObject>(Block, hit.transform.position + hit.normal, hit.transform.rotation);
 
-            // Create a block assuming the hit is a block
+            // Create a block according to hit point and normal
             if (Input.GetKeyDown(KeyCode.C))
                 Instantiate<GameObject>(Block, hit.point + 0.5f * hit.normal, Quaternion.LookRotation(hit.normal, Vector3.up));
 
