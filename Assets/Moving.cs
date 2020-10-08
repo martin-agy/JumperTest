@@ -11,8 +11,9 @@ public class Moving : MonoBehaviour
     CharacterController characterController;
     Camera headCamera;
     Vector3 velocity = Vector3.zero;
-    float ang = 0f; // Turning body left/right
-    float azimuth = 0f; // Turning head up/down
+    float bodyAngle = 0f; // Turning body left/right
+    float headAngle = 0f; // Turning head up/down
+
 
     private void Start()
     {
@@ -23,16 +24,16 @@ public class Moving : MonoBehaviour
     void Update()
     {
         // Find rotation from mouse 
-        ang += 10f * Input.GetAxis("Mouse X");
-        azimuth -= 10f * Input.GetAxis("Mouse Y");
+        bodyAngle += 10f * Input.GetAxis("Mouse X");
+        headAngle -= 10f * Input.GetAxis("Mouse Y");
 
         // Make sure max 80 degrees up/down
-        azimuth = Mathf.Clamp(azimuth, -80f, 80f);
+        headAngle = Mathf.Clamp(headAngle, -80f, 80f);
 
         // Turn the body left/right
-        transform.rotation = Quaternion.Euler(0f, ang, 0f);
+        transform.rotation = Quaternion.Euler(0f, bodyAngle, 0f);
         // Turn the head camera up/down
-        headCamera.transform.localRotation = Quaternion.Euler(azimuth, 0f, 0f);
+        headCamera.transform.localRotation = Quaternion.Euler(headAngle, 0f, 0f);
 
         // Velocity up/down (jumping and falling)
         if (characterController.isGrounded)
@@ -59,8 +60,8 @@ public class Moving : MonoBehaviour
         if (Input.GetKey(KeyCode.S))
             vz -= RunSpeed;
         // Use Lerp to smooth the motion
-        velocity.x = Mathf.Lerp(velocity.x, vx, 50f * Time.deltaTime);
-        velocity.z = Mathf.Lerp(velocity.z, vz, 50f * Time.deltaTime);
+        velocity.x = Mathf.Lerp(velocity.x, vx, 10f * Time.deltaTime);
+        velocity.z = Mathf.Lerp(velocity.z, vz, 10f * Time.deltaTime);
 
         // Get the vector in world coordinates and move player
         Vector3 worldVelocity = transform.TransformVector(velocity);
@@ -70,7 +71,7 @@ public class Moving : MonoBehaviour
         int layerMask = 1 << 8;
         layerMask = ~layerMask;
         // If we have a block straight in front of the camera
-        if (Physics.Raycast(headCamera.transform.position, headCamera.transform.forward, out hit, 10, layerMask))
+        if (Physics.Raycast(headCamera.transform.position, headCamera.transform.forward, out hit, 100, layerMask))
         {
             // Create a block assuming the hit is a block
             if (Input.GetKeyDown(KeyCode.X))
