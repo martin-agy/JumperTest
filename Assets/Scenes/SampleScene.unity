@@ -190,7 +190,10 @@ MonoBehaviour:
   RunSpeed: 5
   StrafeSpeed: 3
   Gravity: 10
-  Block: {fileID: 5465854687905501719, guid: d1a59ce5004274777ba1ef6123f3a04a, type: 3}
+  Blocks:
+  - {fileID: 5465854687905501719, guid: d1a59ce5004274777ba1ef6123f3a04a, type: 3}
+  - {fileID: 5465854687905501719, guid: 456b737e819cf4d0ea58302e08f8ea78, type: 3}
+  - {fileID: 7888854641936889633, guid: 6676a123d28884a13b0cd81c3354762b, type: 3}
 --- !u!1 &487610425
 GameObject:
   m_ObjectHideFlags: 0
